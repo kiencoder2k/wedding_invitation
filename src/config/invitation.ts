@@ -3,7 +3,8 @@ import type { InvitationData } from '../types'
 
 const img = (path: string) => withBase(path)
 
-const MAP_PLACEHOLDER = '21.028511,105.852020' // Hồ Hoàn Kiếm — replace with the real venue
+const VENUE_COORDS = '21.145881,105.750701'
+const VENUE_MAP_LINK = 'https://maps.app.goo.gl/DN3oqhQVXLoDxxuF6'
 
 export const invitation: InvitationData = {
   site: { title: 'Trung Kiên & Thị Mão' },
@@ -41,13 +42,13 @@ export const invitation: InvitationData = {
   },
   ceremony: {
     title: 'Lễ Ăn Hỏi & Lễ Vu Quy',
-    date: '2026-12-19',
+    date: '2026-11-24',
     time: '08:30',
     timezone: 'Asia/Ho_Chi_Minh',
     venue: 'Tư gia nhà gái',
     address: 'Xóm a, thôn b, xã c, TP Hà Nội',
-    mapAddress: MAP_PLACEHOLDER,
-    mapLink: `https://www.google.com/maps?q=${MAP_PLACEHOLDER}`,
+    mapAddress: VENUE_COORDS,
+    mapLink: VENUE_MAP_LINK,
     schedule: [
       { id: 'sc-1', time: '08:00', label: 'Đón khách' },
       { id: 'sc-2', time: '08:30', label: 'Lễ Ăn Hỏi' },
@@ -63,13 +64,13 @@ export const invitation: InvitationData = {
     banquetLabel: 'Khai tiệc',
     locationTitle: 'Tiệc cưới sẽ tổ chức tại',
     title: 'Lễ Thành Hôn',
-    date: '2026-12-20',
+    date: '2026-11-24',
     time: '11:00',
     timezone: 'Asia/Ho_Chi_Minh',
     venue: 'Trung tâm tiệc cưới ABC',
     address: 'Sảnh A, Tầng 1, Số x, đường y, phường z, TP Hà Nội',
-    mapAddress: MAP_PLACEHOLDER,
-    mapLink: `https://www.google.com/maps?q=${MAP_PLACEHOLDER}`,
+    mapAddress: VENUE_COORDS,
+    mapLink: VENUE_MAP_LINK,
     schedule: [
       { id: 'th-1', time: '10:30', label: 'Đón khách' },
       { id: 'th-2', time: '11:00', label: 'Nghi lễ thành hôn' },
@@ -114,12 +115,12 @@ export const invitation: InvitationData = {
       {
         id: 'q1',
         type: 'yesno',
-        label: 'Lễ Ăn Hỏi & Lễ Vu Quy — Nhà gái — 19/12/2026 — bạn có thể tham dự không?',
+        label: 'Lễ Ăn Hỏi & Lễ Vu Quy — Nhà gái — 24/11/2026 — bạn có thể tham dự không?',
       },
       {
         id: 'q2',
         type: 'yesno',
-        label: 'Lễ Thành Hôn — 20/12/2026 — bạn có thể tham dự không?',
+        label: 'Lễ Thành Hôn — 24/11/2026 — bạn có thể tham dự không?',
       },
     ],
   },
