@@ -3,10 +3,6 @@ import type { CommonConfig } from '../types'
 
 const img = (path: string) => withBase(path)
 
-// Google Apps Script web app URL — saves RSVPs and guestbook wishes to a Google Sheet.
-// See google-apps-script/README.md. Empty = RSVPs are not saved and wishes stay in this browser only.
-const SCRIPT_URL = ''
-
 /** Everything both links share. Side-specific parts live in nha-trai.ts / nha-gai.ts. */
 export const common: CommonConfig = {
   date: '2026-11-24',
@@ -75,7 +71,9 @@ export const common: CommonConfig = {
     attendError: 'Vui lòng cho chúng tôi biết bạn có tham dự không.',
     submitError: 'Gửi không thành công. Vui lòng thử lại sau.',
     maxGuests: 4,
-    endpoint: SCRIPT_URL,
+    // Google Apps Script web app URL — see google-apps-script/README.md.
+    // Empty = the form works but answers are not saved anywhere.
+    endpoint: '',
     // Asked before the generated "<lễ> — <nhà> — <ngày> — bạn có thể tham dự không?" questions
     extraQuestions: [
       {
@@ -92,8 +90,6 @@ export const common: CommonConfig = {
     wishPlaceholder: 'Nhập lời chúc*',
     submitLabel: 'Gửi lời chúc',
     formError: 'Vui lòng nhập tên và lời chúc.',
-    submitError: 'Gửi lời chúc không thành công. Vui lòng thử lại sau.',
-    endpoint: SCRIPT_URL,
     suggestions: [
       'Chúc mừng ngày vui của hai bạn, trăm năm hạnh phúc bền lâu!',
       'Chúc hai bạn sống bên nhau đầu bạc răng long.',

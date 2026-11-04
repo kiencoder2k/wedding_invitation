@@ -107,9 +107,6 @@ export interface InvitationData {
     wishPlaceholder: string
     submitLabel: string
     formError: string
-    submitError: string
-    /** Same Apps Script as rsvp.endpoint; empty = wishes are kept in this browser only */
-    endpoint: string
     suggestions: string[]
     seedWishes: { name: string; wish: string }[]
   }

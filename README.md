@@ -34,10 +34,8 @@ Ngày âm lịch được tính tự động (`src/lib/lunar.ts`).
 
 ## Lưu dữ liệu khách mời
 
-Điền URL Google Apps Script vào `SCRIPT_URL` trong `src/config/common.ts` — xem `google-apps-script/README.md`.
-
-- **Xác nhận tham dự:** lưu vào tab `RSVP`. Để trống URL thì form vẫn chạy nhưng không lưu.
-- **Sổ lưu bút:** lưu vào tab `Wishes`, mọi khách đều thấy; muốn ẩn lời chúc nào thì xoá dòng đó trong sheet. Để trống URL thì lời chúc chỉ lưu trong trình duyệt của người gửi.
+- **Xác nhận tham dự:** điền URL Google Apps Script vào `rsvp.endpoint` trong `src/config/common.ts` — xem `google-apps-script/README.md`. Để trống thì form vẫn chạy nhưng không lưu.
+- **Sổ lưu bút:** lưu trong trình duyệt của người gửi (localStorage), tải lại trang không mất. Người khác không thấy lời chúc này.
 
 ## Deploy
 
