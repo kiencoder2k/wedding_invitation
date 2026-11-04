@@ -37,7 +37,3 @@ Mỗi lần push lên nhánh `main`, GitHub Actions (`.github/workflows/deploy.y
 Lần đầu cần bật: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 
 Nếu đổi tên repo, sửa `base` trong `vite.config.ts` cho khớp (`/<tên-repo>/`).
-
----
-
-Dựa trên mã nguồn [tuannh982/my-wedding-invitation](https://github.com/tuannh982/my-wedding-invitation).
