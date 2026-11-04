@@ -1,5 +1,5 @@
 import type { FormEvent } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { uuid } from '../../lib/uuid'
 import type { SectionProps } from '../../types'
 import Reveal from '../ui/Reveal'
@@ -12,6 +12,39 @@ interface Wish {
   at: Date | null
 }
 
+/** Shape stored in localStorage and returned by the Apps Script (`?action=wishes`) */
+interface StoredWish {
+  name: string
+  wish: string
+  at: string | null
+}
+
+const CACHE_KEY = 'guestbook-wishes'
+
+function readCache(): StoredWish[] {
+  try {
+    const parsed: unknown = JSON.parse(localStorage.getItem(CACHE_KEY) ?? '[]')
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+function writeCache(wishes: StoredWish[]) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(wishes))
+  } catch {
+    // Private mode / storage disabled — the list still works for this visit
+  }
+}
+
+const toWish = (w: StoredWish): Wish => ({
+  id: uuid(),
+  name: w.name,
+  wish: w.wish,
+  at: w.at ? new Date(w.at) : null,
+})
+
 const fieldClass =
   'w-full rounded-[8px] border bg-white/70 px-4 py-3 text-[15px] outline-none placeholder:text-[#511419]/55 focus:bg-white'
 
@@ -19,29 +52,70 @@ function formatTime(d: Date) {
   return `${d.toLocaleTimeString('vi-VN', { hour12: false })} ${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`
 }
 
-// Wishes live in memory only (reset on reload) — wire `submit` to a backend to persist them.
+// Wishes are shared through the Apps Script sheet and cached in localStorage so they show
+// instantly on reload. Without an endpoint they are kept in this browser only.
 export default function Guestbook({ data }: SectionProps) {
   const gb = data.guestbook
-  const [wishes, setWishes] = useState<Wish[]>(() =>
-    gb.seedWishes.map((w) => ({ id: uuid(), at: null, ...w })),
-  )
+  const seeds = () => gb.seedWishes.map((w) => toWish({ ...w, at: null }))
+  const [wishes, setWishes] = useState<Wish[]>(() => [...readCache().map(toWish), ...seeds()])
   const [name, setName] = useState('')
   const [wish, setWish] = useState('')
   const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: load once per endpoint
+  useEffect(() => {
+    if (!gb.endpoint) return
+    let cancelled = false
+    fetch(`${gb.endpoint}?action=wishes`)
+      .then((res) => res.json() as Promise<{ ok?: boolean; wishes?: StoredWish[] }>)
+      .then((json) => {
+        if (cancelled || !json.ok || !Array.isArray(json.wishes)) return
+        writeCache(json.wishes)
+        setWishes([...json.wishes.map(toWish), ...seeds()])
+      })
+      .catch(() => {
+        // Offline / script down — keep showing the cached list
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [gb.endpoint])
 
   const suggest = () => {
     const pool = gb.suggestions.filter((s) => s !== wish)
     if (pool.length) setWish(pool[Math.floor(Math.random() * pool.length)])
   }
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault()
+    if (submitting) return
     if (!name.trim() || !wish.trim()) {
       setError(gb.formError)
       return
     }
     setError('')
-    setWishes((w) => [{ id: uuid(), name: name.trim(), wish: wish.trim(), at: new Date() }, ...w])
+    const entry: StoredWish = { name: name.trim(), wish: wish.trim(), at: new Date().toISOString() }
+    if (gb.endpoint) {
+      setSubmitting(true)
+      try {
+        const res = await fetch(gb.endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({ type: 'wish', name: entry.name, wish: entry.wish }),
+        })
+        const json = (await res.json()) as { ok?: boolean; at?: string }
+        if (!res.ok || !json.ok) throw new Error('submit failed')
+        if (json.at) entry.at = json.at
+      } catch {
+        setError(gb.submitError)
+        return
+      } finally {
+        setSubmitting(false)
+      }
+    }
+    writeCache([entry, ...readCache()])
+    setWishes((w) => [toWish(entry), ...w])
     setName('')
     setWish('')
   }
@@ -94,7 +168,9 @@ export default function Guestbook({ data }: SectionProps) {
               >
                 🪄
               </button>
-              <PillButton type="submit">{gb.submitLabel}</PillButton>
+              <PillButton type="submit" disabled={submitting}>
+                {submitting ? 'Đang gửi...' : gb.submitLabel}
+              </PillButton>
             </div>
           </form>
           <FlowerDeco

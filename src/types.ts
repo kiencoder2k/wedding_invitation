@@ -39,6 +39,37 @@ export interface EventInfo {
   mapLink: string // "Chỉ đường" link + calendar location
 }
 
+/** Per-side part of an event; date and timezone are shared (see config/common.ts) */
+export type EventDetails = Omit<EventInfo, 'date' | 'timezone'>
+
+/** Labels of the reception card, shared by both sides */
+export interface PartyLabels {
+  cardTitle: string
+  startsAtLabel: string
+  welcomeLabel: string
+  banquetLabel: string
+  locationTitle: string
+}
+
+/** What differs between the groom-side link (/nha-trai/) and the bride-side link (/nha-gai/) */
+export interface SideConfig {
+  /** URL segment after the base, e.g. "nha-trai" */
+  id: string
+  /** Shown in the RSVP question, e.g. "Nhà trai" */
+  houseLabel: string
+  ceremony: EventDetails
+  party: EventDetails
+}
+
+export interface CommonConfig extends Omit<InvitationData, 'ceremony' | 'party' | 'rsvp'> {
+  /** Shared by the ceremony and the party on both links */
+  date: string // ISO yyyy-mm-dd
+  timezone: string
+  partyLabels: PartyLabels
+  /** The per-event yes/no questions are generated from each side's events */
+  rsvp: Omit<InvitationData['rsvp'], 'questions'> & { extraQuestions: RsvpQuestion[] }
+}
+
 export interface InvitationData {
   site: { title: string }
   intro: { greeting: string; openButton: string }
@@ -53,13 +84,7 @@ export interface InvitationData {
   /** Home ceremony (ăn hỏi / vu quy / thành hôn tại tư gia) */
   ceremony: EventInfo
   /** Reception / banquet */
-  party: EventInfo & {
-    cardTitle: string
-    startsAtLabel: string
-    welcomeLabel: string
-    banquetLabel: string
-    locationTitle: string
-  }
+  party: EventInfo & PartyLabels
   calendarButton: string
   gallery: { title: string; images: GalleryImage[] }
   dressCode?: { title: string; subtitle: string; colors: string[] }
@@ -82,6 +107,9 @@ export interface InvitationData {
     wishPlaceholder: string
     submitLabel: string
     formError: string
+    submitError: string
+    /** Same Apps Script as rsvp.endpoint; empty = wishes are kept in this browser only */
+    endpoint: string
     suggestions: string[]
     seedWishes: { name: string; wish: string }[]
   }

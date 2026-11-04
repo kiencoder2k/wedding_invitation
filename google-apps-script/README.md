@@ -1,4 +1,6 @@
-# RSVP → Google Sheets setup
+# RSVP + sổ lưu bút → Google Sheets setup
+
+One script stores both RSVPs (tab `RSVP`) and guestbook wishes (tab `Wishes`).
 
 ## 1. Create the sheet
 Use an existing Google Sheet (or create one at https://sheets.new).
@@ -19,7 +21,7 @@ Use an existing Google Sheet (or create one at https://sheets.new).
   `https://script.google.com/macros/s/AKfycb.../exec`).
 
 ## 4. Connect the site
-- Paste the URL into `src/config/invitation.ts` → `rsvp.endpoint`.
+- Paste the URL into `src/config/common.ts` → `SCRIPT_URL` (used by both the RSVP form and the guestbook).
 - Rebuild/redeploy the site.
 
 ## 5. Test
@@ -32,6 +34,11 @@ Use an existing Google Sheet (or create one at https://sheets.new).
   question with an empty answer string).
 - Decline case: Attending=no, Guests empty, Answers still a JSON array (typically
   empty answers; any answered questions are kept).
+
+## Guestbook
+- Sending a wish appends a row to the `Wishes` tab: Timestamp | Name | Wish.
+- On load the site calls `<URL>?action=wishes` and shows the latest 300, newest first.
+- To hide a wish, delete its row in the sheet.
 
 ## Updating the script later
 After editing Code.gs in the Apps Script editor, you must deploy a **new version**
