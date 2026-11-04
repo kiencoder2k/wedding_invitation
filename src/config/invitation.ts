@@ -4,7 +4,7 @@ import type { InvitationData } from '../types'
 const img = (path: string) => withBase(path)
 
 const VENUE_COORDS = '21.145881,105.750701'
-const VENUE_MAP_LINK = 'https://maps.app.goo.gl/DN3oqhQVXLoDxxuF6'
+const VENUE_MAP_LINK = `https://www.google.com/maps/dir/?api=1&destination=${VENUE_COORDS}`
 
 export const invitation: InvitationData = {
   site: { title: 'Trung Kiên & Thị Mão' },
