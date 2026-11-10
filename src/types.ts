@@ -1,8 +1,6 @@
 export interface Person {
   fullName: string
   shortName: string
-  /** Birth-order title shown under the full name, e.g. "Trưởng Nam", "Út Nữ" */
-  rank: string
   parentTitle: string
   father: string
   mother: string
@@ -39,15 +37,17 @@ export interface EventInfo {
   mapLink: string // "Chỉ đường" link + calendar location
 }
 
-/** Per-side part of an event; date and timezone are shared (see config/common.ts) */
-export type EventDetails = Omit<EventInfo, 'date' | 'timezone'>
+/** Per-side part of an event; date, timezone and schedule are shared (see config/common.ts) */
+export type EventDetails = Omit<EventInfo, 'date' | 'timezone' | 'schedule'>
 
 /** Labels of the reception card, shared by both sides */
 export interface PartyLabels {
   cardTitle: string
   startsAtLabel: string
   welcomeLabel: string
+  welcomeTime: string // HH:mm
   banquetLabel: string
+  banquetTime: string // HH:mm
   locationTitle: string
 }
 
@@ -65,6 +65,8 @@ export interface CommonConfig extends Omit<InvitationData, 'ceremony' | 'party' 
   /** Shared by the ceremony and the party on both links */
   date: string // ISO yyyy-mm-dd
   timezone: string
+  /** "Lịch trình ngày cưới" — same for both sides */
+  schedule: ScheduleItem[]
   partyLabels: PartyLabels
   /** The per-event yes/no questions are generated from each side's events */
   rsvp: Omit<InvitationData['rsvp'], 'questions'> & { extraQuestions: RsvpQuestion[] }

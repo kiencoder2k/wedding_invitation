@@ -24,9 +24,8 @@ function CoupleName({ person }: { person: Person }) {
   return (
     <div className="flex flex-col items-center">
       <p className="text-[38px] leading-tight" style={{ fontFamily: NAME_FONT }}>
-        {person.fullName}
+        {person.shortName}
       </p>
-      <p className="mt-3 text-[11px] uppercase tracking-[0.3em] opacity-70">{person.rank}</p>
     </div>
   )
 }

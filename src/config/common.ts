@@ -1,5 +1,20 @@
+import imgHook from '../assets/image/img_hook.jpg'
+import qr1 from '../assets/image/qr_1.jpg'
+import qr2 from '../assets/image/qr_2.jpg'
 import { withBase } from '../lib/withBase'
 import type { CommonConfig } from '../types'
+
+// img_1.jpg … img_12.jpg, sorted by number
+const albumImages = Object.entries(
+  import.meta.glob<string>('../assets/image/img_*.jpg', {
+    eager: true,
+    import: 'default',
+  }),
+)
+  .map(([path, url]) => ({ n: Number(/img_(\d+)\.jpg$/.exec(path)?.[1]), url }))
+  .filter((x) => !Number.isNaN(x.n))
+  .sort((a, b) => a.n - b.n)
+  .map(({ url }) => ({ url, alt: '' }))
 
 const img = (path: string) => withBase(path)
 
@@ -7,31 +22,35 @@ const img = (path: string) => withBase(path)
 export const common: CommonConfig = {
   date: '2026-11-24',
   timezone: 'Asia/Ho_Chi_Minh',
+  schedule: [
+    { id: 'tl-1', time: '08:20', label: 'Lễ ăn hỏi' },
+    { id: 'tl-2', time: '10:00', label: 'Nghi lễ thành hôn' },
+    { id: 'tl-3', time: '16:30', label: 'Khai tiệc' },
+    { id: 'tl-4', time: '19:30', label: 'Tiễn khách' },
+  ],
   site: { title: 'Trung Kiên & Thị Mão' },
   intro: { greeting: 'Thân Mời', openButton: 'Mở thiệp' },
   hero: {
     kicker: 'Save the date',
     // Photo tucked into the envelope; falls back to the first gallery image when empty
-    photo: '',
+    photo: imgHook,
   },
   couple: {
     groom: {
       fullName: 'Nguyễn Trung Kiên',
       shortName: 'Trung Kiên',
-      rank: 'Trưởng Nam',
       parentTitle: 'Ông Bà',
-      father: 'Nguyễn Văn X',
-      mother: 'Nguyễn Thị X',
-      address: 'Xóm a, thôn b,\nxã c, TP Hà Nội',
+      father: 'Nguyễn Văn Cường',
+      mother: 'Hoàng Thị Phượng',
+      address: 'Yên Nhân, Mê Linh,\nHà Nội',
     },
     bride: {
       fullName: 'Nguyễn Thị Mão',
-      shortName: 'Thị Mão',
-      rank: 'Út Nữ',
+      shortName: 'Ngọc Mão',
       parentTitle: 'Ông Bà',
-      father: 'Nguyễn Văn Y',
-      mother: 'Nguyễn Thị Y',
-      address: 'Xóm a, thôn b,\nxã c, TP Hà Nội',
+      father: 'Nguyễn Bá Vinh',
+      mother: 'Lưu Thị Hiên',
+      address: 'Ấp Hạ, Quang Minh,\nHà Nội',
     },
   },
   weddingInfo: {
@@ -43,18 +62,16 @@ export const common: CommonConfig = {
   partyLabels: {
     cardTitle: 'Thông tin tiệc cưới',
     startsAtLabel: 'Tiệc cưới sẽ diễn ra vào lúc:',
-    // Must match schedule labels in the side configs to show their times on the card
     welcomeLabel: 'Đón khách',
+    welcomeTime: '16:00',
     banquetLabel: 'Khai tiệc',
+    banquetTime: '16:30',
     locationTitle: 'Tiệc cưới sẽ tổ chức tại',
   },
   calendarButton: 'Thêm vào lịch',
   gallery: {
     title: 'Album ảnh',
-    images: Array.from({ length: 10 }, (_, i) => ({
-      url: img(`/gallery/placeholder-${i + 1}.svg`),
-      alt: '',
-    })),
+    images: albumImages,
   },
   dressCode: {
     title: 'Dress code',
@@ -103,8 +120,8 @@ export const common: CommonConfig = {
     title: 'Hộp quà mừng',
     hint: 'Nhấn để mở',
     qrCodes: [
-      { label: 'Mừng cưới chú rể', owner: 'Nguyễn Trung Kiên', image: img('/qr/groom.svg') },
-      { label: 'Mừng cưới cô dâu', owner: 'Nguyễn Thị Mão', image: img('/qr/bride.svg') },
+      { label: 'Mừng cưới chú rể', owner: 'Nguyễn Trung Kiên', image: qr1 },
+      { label: 'Mừng cưới cô dâu', owner: 'Nguyễn Thị Mão', image: qr2 },
     ],
   },
   thankYou: 'Sự hiện diện của quý khách là niềm vinh hạnh của gia đình chúng tôi!',

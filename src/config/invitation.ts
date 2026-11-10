@@ -24,12 +24,12 @@ function attendQuestion(id: string, event: EventDetails, houseLabel: string): Rs
 
 export const side = currentSide()
 
-const { date, timezone, partyLabels, rsvp, ...shared } = common
+const { date, timezone, schedule, partyLabels, rsvp, ...shared } = common
 
 export const invitation: InvitationData = {
   ...shared,
-  ceremony: { ...side.ceremony, date, timezone },
-  party: { ...side.party, ...partyLabels, date, timezone },
+  ceremony: { ...side.ceremony, date, timezone, schedule },
+  party: { ...side.party, ...partyLabels, date, timezone, schedule },
   rsvp: {
     ...rsvp,
     questions: [

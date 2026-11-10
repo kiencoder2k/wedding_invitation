@@ -9,20 +9,23 @@ export default function PartyInfo({ data }: SectionProps) {
   const [rsvpOpen, setRsvpOpen] = useState(false)
   const party = data.party
   const { groom, bride } = data.couple
-  const findTime = (label: string) =>
-    party.schedule.find((s) => s.label.toLowerCase() === label.toLowerCase())?.time
-
-  const welcome = findTime(party.welcomeLabel)
-  const banquet = findTime(party.banquetLabel)
+  const welcome = party.welcomeTime
+  const banquet = party.banquetTime
+  const start = welcome || party.time
+  // Calendar event runs from guest welcome to the last schedule item
+  const lastItem = party.schedule[party.schedule.length - 1]
 
   const calendarUrl = buildGoogleCalendarUrl({
     title: `${party.title} ${groom.shortName} & ${bride.shortName}`,
     description: `${party.title} ${groom.shortName} & ${bride.shortName} — ${party.venue}`,
     location: party.address || party.mapLink,
     dateIso: party.date,
-    timeHHmm: welcome ?? party.time,
+    timeHHmm: start,
     timeZone: party.timezone,
-    durationMinutes: durationFromSchedule(party.schedule, 180),
+    durationMinutes: durationFromSchedule(
+      lastItem ? [{ id: 'start', time: start, label: '' }, lastItem] : [],
+      180,
+    ),
   })
 
   return (
