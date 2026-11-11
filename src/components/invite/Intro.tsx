@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { SectionProps } from '../../types'
-import { dateParts, FlowerDeco, NAME_FONT, Ornament, TITLE_FONT } from './shared'
+import { dateParts, FlowerDeco, Ornament, SCRIPT_FONT } from './shared'
 
 const REVEAL_DELAY_MS = 700
 
@@ -87,11 +87,9 @@ export default function Intro({ data, open, onOpen }: IntroProps) {
           </svg>
         </div>
 
-        <div className="relative mt-6 leading-none" style={{ fontFamily: NAME_FONT }}>
+        <div className="relative mt-6 leading-none" style={{ fontFamily: SCRIPT_FONT }}>
           <p className="text-[34px]">{groom.shortName}</p>
-          <p className="my-1 text-[18px] font-bold" style={{ fontFamily: TITLE_FONT }}>
-            &amp;
-          </p>
+          <p className="my-1 text-[26px]">&amp;</p>
           <p className="text-[34px]">{bride.shortName}</p>
         </div>
         <Ornament className="relative mt-3" color="var(--color-primary)" />

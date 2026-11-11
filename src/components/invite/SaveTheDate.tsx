@@ -1,6 +1,6 @@
 import type { SectionProps } from '../../types'
 import Reveal from '../ui/Reveal'
-import { FlowerDeco, NAME_FONT, SCRIPT_FONT, TITLE_FONT } from './shared'
+import { FlowerDeco, SCRIPT_FONT, TITLE_FONT } from './shared'
 
 const ENVELOPE = '#6a1a22'
 const ENVELOPE_DARK = '#4c1017'
@@ -110,7 +110,7 @@ export default function SaveTheDate({ data }: SectionProps) {
       <Reveal delay={250}>
         <div
           className="relative mt-12 flex flex-col items-center text-center leading-[1.15]"
-          style={{ fontFamily: NAME_FONT, color: 'var(--color-primary)' }}
+          style={{ fontFamily: SCRIPT_FONT, color: 'var(--color-primary)' }}
         >
           <span
             aria-hidden

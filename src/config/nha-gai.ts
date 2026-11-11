@@ -1,8 +1,8 @@
 import type { SideConfig } from '../types'
 
 // Link: https://tuancoi20042000.github.io/wedding_invitation/nha-gai/
-// Nhà Văn Hoá Ấp Hạ, Quang Minh — plus code 5PCX+3PM (7PH75PCX+3PM)
-const COORDS = '21.170213,105.749297'
+// Nhà Văn Hoá Ấp Hạ, Quang Minh
+const COORDS = '21.1705411,105.7487847'
 const directions = (coords: string) =>
   `https://www.google.com/maps/dir/?api=1&destination=${coords}`
 

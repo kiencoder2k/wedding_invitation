@@ -32,10 +32,6 @@ export const invitation: InvitationData = {
   party: { ...side.party, ...partyLabels, date, timezone, schedule },
   rsvp: {
     ...rsvp,
-    questions: [
-      ...rsvp.extraQuestions,
-      attendQuestion('q1', side.ceremony, side.houseLabel),
-      attendQuestion('q2', side.party, side.houseLabel),
-    ],
+    questions: [...rsvp.extraQuestions, attendQuestion('q1', side.ceremony, side.houseLabel)],
   },
 }

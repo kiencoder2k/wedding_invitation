@@ -2,6 +2,13 @@ import type { SectionProps } from '../../types'
 import Reveal from '../ui/Reveal'
 import { Heading } from './shared'
 
+// Final embed URL (the old maps?output=embed form 301-redirects with
+// X-Frame-Options: SAMEORIGIN, which browsers block as ERR_BLOCKED_BY_RESPONSE)
+function mapEmbedUrl(query: string, zoom = 16) {
+  const q = query.replace(/!/g, '')
+  return `https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1s${encodeURIComponent(q)}!6i${zoom}!3m1!1svi!5m1!1svi`
+}
+
 export default function Location({ data }: SectionProps) {
   const party = data.party
   return (
@@ -15,7 +22,7 @@ export default function Location({ data }: SectionProps) {
       </Reveal>
       <Reveal delay={100}>
         <iframe
-          src={`https://www.google.com/maps?q=${encodeURIComponent(party.mapAddress)}&output=embed`}
+          src={mapEmbedUrl(party.mapAddress)}
           title={`Bản đồ: ${party.venue}`}
           loading="lazy"
           className="mt-5 h-[230px] w-full rounded-[10px] border-0 shadow-[0_6px_16px_rgba(81,20,25,0.15)]"
