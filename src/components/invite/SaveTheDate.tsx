@@ -119,8 +119,8 @@ export default function SaveTheDate({ data }: SectionProps) {
           >
             &amp;
           </span>
-          <span className="relative text-[46px]">{groom.shortName}</span>
-          <span className="relative text-[46px]">{bride.shortName}</span>
+          <span className="relative text-[56px]">{groom.shortName}</span>
+          <span className="relative text-[56px]">{bride.shortName}</span>
         </div>
       </Reveal>
     </section>

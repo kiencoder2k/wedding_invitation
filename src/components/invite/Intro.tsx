@@ -88,9 +88,9 @@ export default function Intro({ data, open, onOpen }: IntroProps) {
         </div>
 
         <div className="relative mt-6 leading-none" style={{ fontFamily: SCRIPT_FONT }}>
-          <p className="text-[34px]">{groom.shortName}</p>
-          <p className="my-1 text-[26px]">&amp;</p>
-          <p className="text-[34px]">{bride.shortName}</p>
+          <p className="text-[42px]">{groom.shortName}</p>
+          <p className="my-1 text-[30px]">&amp;</p>
+          <p className="text-[42px]">{bride.shortName}</p>
         </div>
         <Ornament className="relative mt-3" color="var(--color-primary)" />
         <p

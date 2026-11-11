@@ -23,7 +23,7 @@ function Parents({ person, houseLabel }: { person: Person; houseLabel: string })
 function CoupleName({ person }: { person: Person }) {
   return (
     <div className="flex flex-col items-center">
-      <p className="text-[38px] leading-tight" style={{ fontFamily: SCRIPT_FONT }}>
+      <p className="text-[46px] leading-tight" style={{ fontFamily: SCRIPT_FONT }}>
         {person.shortName}
       </p>
     </div>
@@ -57,7 +57,7 @@ export default function WeddingInfo({ data }: SectionProps) {
           <div className="mt-6 flex flex-col items-center gap-5">
             <CoupleName person={groom} />
             <span
-              className="text-[34px] leading-none opacity-90"
+              className="text-[40px] leading-none opacity-90"
               style={{ fontFamily: SCRIPT_FONT }}
             >
               &amp;
