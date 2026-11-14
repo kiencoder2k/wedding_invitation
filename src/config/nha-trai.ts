@@ -12,7 +12,7 @@ export const nhaTrai: SideConfig = {
   houseLabel: 'Nhà trai',
   ceremony: {
     title: 'Lễ Thành Hôn',
-    time: '16:00',
+    time: '10:00',
     venue: 'Tư gia nhà trai',
     address: 'Xóm Vọt, Thôn Yên Nhân, Xã Mê Linh, TP Hà Nội',
     mapAddress: COORDS,

@@ -11,7 +11,7 @@ export const nhaGai: SideConfig = {
   houseLabel: 'Nhà gái',
   ceremony: {
     title: 'Lễ Thành Hôn',
-    time: '16:00',
+    time: '08:20',
     venue: 'Tư gia nhà gái',
     address: 'Nhà văn hóa Thôn Ấp Hạ, xã Quang Minh, TP Hà Nội',
     mapAddress: COORDS,
